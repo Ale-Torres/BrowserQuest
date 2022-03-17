@@ -54,7 +54,12 @@
         return result;
     }
 
-    function successors(find, x, y, grid, rows, cols){
+    function successors(find, x, y, grid){
+
+        //Get dimensions of the grid
+        var rows = grid.length;
+        var cols = grid[0].length;
+
         var
             N = y - 1,
             S = y + 1,
@@ -136,7 +141,7 @@
             current = open.splice(min, 1)[0];
             if (current.v != end.v) {
                 --length;
-                next = successors(find, current.x, current.y, grid, rows, cols);
+                next = successors(find, current.x, current.y, grid);
                 for(i = 0, j = next.length; i < j; ++i){
                     (adj = next[i]).p = current;
                     adj.f = adj.g = 0;
