@@ -4,12 +4,20 @@ define(function() {
     var AStar = (function () {
 
         /**
-         * A* (A-Star) algorithm for a path finder
-         * @author  Andrea Giammarchi
-         * @license Mit Style License
-         */
+             * A* (A-Star) algorithm for a path finder
+             * @author  Andrea Giammarchi
+             * @license Mit Style License
+             */
+        function diagonalSuccessors($NSEW, NSEW, grid, result, i) {
+            $N = $NSEW[0];
+            $S = $NSEW[1];
+            $E = $NSEW[2];
+            $W = $NSEW[3];
+            N = NSEW[0];
+            S = NSEW[1];
+            E = NSEW[2];
+            W = NSEW[3];
 
-        function diagonalSuccessors($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i) {
             if($N) {
                 $E && !grid[N][E] && (result[i++] = {x:E, y:N});
                 $W && !grid[N][W] && (result[i++] = {x:W, y:N});
@@ -21,7 +29,15 @@ define(function() {
             return result;
         }
 
-        function diagonalSuccessorsFree($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i) {
+        function diagonalSuccessorsFree($NSEW, NSEW, grid, result, i) {
+            N = NSEW[0];
+            S = NSEW[1];
+            E = NSEW[2];
+            W = NSEW[3];
+
+            rows = grid.length;
+            cols = grid[0].length;
+
             $N = N > -1;
             $S = S < rows;
             $E = E < cols;
@@ -37,7 +53,7 @@ define(function() {
             return result;
         }
 
-        function nothingToDo($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i) {
+        function nothingToDo($NSEW, NSEW, grid, result, i) {
             return result;
         }
 
@@ -58,7 +74,9 @@ define(function() {
             $E && (result[i++] = {x:E, y:y});
             $S && (result[i++] = {x:x, y:S});
             $W && (result[i++] = {x:W, y:y});
-            return find($N, $S, $E, $W, N, S, E, W, grid, rows, cols, result, i);
+            $NSEW = [$N, $S, $E, $W];
+            NSEW = [N, S, E, W];
+            return find($NSEW, NSEW, grid, result, i);
         }
 
         function diagonal(start, end, f1, f2) {

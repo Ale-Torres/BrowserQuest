@@ -1,6 +1,6 @@
   
 (function(undefined) {  
-  /**
+    /**
      * A* (A-Star) algorithm for a path finder
      * @author  Andrea Giammarchi
      * @license Mit Style License
