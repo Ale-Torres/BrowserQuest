@@ -131,64 +131,51 @@ define(['character', 'timer'], function(Character, Timer) {
     
             // Estimate of the movement distance for one update
             var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
-    
+            
+            // Function parameters for start function. Runs as update or stop function depending on parameters
             if(c.isMoving() && c.movement.inProgress === false) {
+                updateorstop = function(axis, value, stop){
+                    if(axis == 0){
+                        c.x = value;
+                    } 
+                    else {
+                        c.y = value;
+                    }
+                    // Run as stop function
+                    if(stop == 1){
+                        c.nextStep();
+                    }
+                    c.hasMoved();
+                }
+                
                 if(c.orientation === Types.Orientations.LEFT) {
                     c.movement.start(this.game.currentTime,
-                                     function(x) {
-                                        c.x = x;
-                                        c.hasMoved();
-                                     },
-                                     function() {
-                                        c.x = c.movement.endValue;
-                                        c.hasMoved();
-                                        c.nextStep();
-                                     },
+                                     updateorstop(0, x, 0),
+                                     updateorstop(0, c.movement.endValue, 1),
                                      c.x - tick,
                                      c.x - 16,
                                      c.moveSpeed);
                 }
                 else if(c.orientation === Types.Orientations.RIGHT) {
                     c.movement.start(this.game.currentTime,
-                                     function(x) {
-                                        c.x = x;
-                                        c.hasMoved();
-                                     },
-                                     function() {
-                                        c.x = c.movement.endValue;
-                                        c.hasMoved();
-                                        c.nextStep();
-                                     },
+                                     updateorstop(0, x, 0),
+                                     updateorstop(0, c.movement.endValue, 1),
                                      c.x + tick,
                                      c.x + 16,
                                      c.moveSpeed);
                 }
                 else if(c.orientation === Types.Orientations.UP) {
                     c.movement.start(this.game.currentTime,
-                                     function(y) {
-                                        c.y = y;
-                                        c.hasMoved();
-                                     },
-                                     function() {
-                                        c.y = c.movement.endValue;
-                                        c.hasMoved();
-                                        c.nextStep();
-                                     },
+                                     updateorstop(0, y, 0),
+                                     updateorstop(0, c.movement.endValue, 1),
                                      c.y - tick,
                                      c.y - 16,
                                      c.moveSpeed);
                 }
                 else if(c.orientation === Types.Orientations.DOWN) {
                     c.movement.start(this.game.currentTime,
-                                     function(y) {
-                                        c.y = y;
-                                        c.hasMoved();
-                                     },
-                                     function() {
-                                        c.y = c.movement.endValue;
-                                        c.hasMoved();
-                                        c.nextStep();
-                                     },
+                                     updateorstop(0, y, 0),
+                                     updateorstop(0, c.movement.endValue, 1),
                                      c.y + tick,
                                      c.y + 16,
                                      c.moveSpeed);
