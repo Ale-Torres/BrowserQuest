@@ -1,10 +1,8 @@
 
 define(function() {
 
-    var Entity = Class.extend({
+    return Class.extend({
         init: function(id, kind) {
-    	    var self = this;
-	    
             this.id = id;
             this.kind = kind;
 
@@ -46,7 +44,7 @@ define(function() {
     	setSprite: function(sprite) {
     	    if(!sprite) {
     	        log.error(this.id + " : sprite is null", true);
-    	        throw "Error";
+    	        throw new Error(this.id + " : sprite is null");
     	    }
 	    
     	    if(this.sprite && this.sprite.name === sprite.name) {
@@ -254,6 +252,4 @@ define(function() {
             this.dirty_callback = dirty_callback;
         }
     });
-    
-    return Entity;
 });

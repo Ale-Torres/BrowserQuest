@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.42% </span>
+                <span class="strong">87.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>146/167</span>
+                <span class='fraction'>148/169</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/9</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.87% </span>
+                <span class="strong">87.03% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>139/160</span>
+                <span class='fraction'>141/162</span>
             </div>
         
             
@@ -529,6 +529,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -553,13 +554,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -802,23 +802,23 @@
         return enc;
     }
 &nbsp;
-    function _add_decoding(frame, encoding, key=<span class="branch-0 cbranch-no" title="branch not covered" >null)</span> {
+    function _add_decoded_sec(frame, decoding, key=<span class="branch-0 cbranch-no" title="branch not covered" >null)</span> {
         if(frame instanceof Array) {
-            frame.push(encoding);
+            frame.push(decoding);
         }else{
-            frame[key] = encoding;
+            frame[key] = decoding;
         }
     }
 &nbsp;
     function _decode_string(data, pos, frame, key) {
-        e = 0;
+        let e = 0;
         while (data.charCodeAt(pos) === 65535) {
 <span class="cstat-no" title="statement not covered" >            e += 65535;</span>
 <span class="cstat-no" title="statement not covered" >            pos++;</span>
         }
         e += data.charCodeAt(pos++);
 &nbsp;
-        _add_decoding(frame, data.substr(pos, e), key);
+        _add_decoded_sec(frame, data.substr(pos, e), key);
 &nbsp;
         pos += e;
 &nbsp;
@@ -826,6 +826,7 @@
     }
 &nbsp;
     function _decode_floats(data, t, pos, f, key) {
+        let  r = 0;
         if (((t - 13) / 2 | 0) === 0) {
             r = data.charCodeAt(pos);
             if (r &gt; 127) {
@@ -845,28 +846,27 @@
         }
 &nbsp;
         e = t % 2 ? e + r * 0.01 : <span class="branch-1 cbranch-no" title="branch not covered" >0 - (e + r * 0.01);</span>
-        _add_decoding(f, e, key);
+        _add_decoded_sec(f, e, key);
 &nbsp;
         return pos;
     }
 &nbsp;
     function _decode_fixed(frame, type, key) {
         type = type - 17;
+        let decoding = 0;
         <span class="missing-if-branch" title="if path not taken" >I</span>if (type &gt; 115) {
-<span class="cstat-no" title="statement not covered" >            encoding = 0 - type + 116;</span>
+<span class="cstat-no" title="statement not covered" >            decoding = 0 - type + 116;</span>
         } else {
-            encoding = type + 1;
+            decoding = type + 1;
         }
-        _add_decoding(frame, encoding, key);
+        _add_decoded_sec(frame, decoding, key);
     }
-&nbsp;
-    function <span class="fstat-no" title="function not covered" >_decode_array(</span>data, pos, frame, key) {}
 &nbsp;
 &nbsp;
 &nbsp;
     function decode(data) {
         var pos = 0;
-        data_len = data.length;
+        let data_len = data.length;
         var stack = [];
         var dec = undefined;
         var frame = null;
@@ -890,7 +890,7 @@
                 set = false;
                 dict = false;
                 if(dec !== undefined){
-                    _add_decoding(frame, e, key);
+                    _add_decoded_sec(frame, e, key);
                 } else {
                     dec = e;
                 }
@@ -901,7 +901,7 @@
                 set = true;
                 dict = true;
                 if(dec !== undefined){
-                    _add_decoding(frame, e, key);
+                    _add_decoded_sec(frame, e, key);
                 } else {
                     dec = e;
                 }
@@ -925,7 +925,7 @@
                     pos += 2;
                 }
                 e = t % 2 ? e + 1 : <span class="branch-1 cbranch-no" title="branch not covered" >0 - e;</span>
-                _add_decoding(frame, e, key);
+                _add_decoded_sec(frame, e, key);
                 set = true;
 &nbsp;
             // Floats
@@ -934,12 +934,12 @@
                 set = true;
             // Booleans
             } else if (t &gt; 4 &amp;&amp; t &lt; 7) {
-                _add_decoding(frame, t === 5, key);
+                _add_decoded_sec(frame, t === 5, key);
                 set = true;
 &nbsp;
             // Null
             } else if (t === 0) {
-                _add_decoding(frame, null, key);
+                _add_decoded_sec(frame, null, key);
                 set = true;
 &nbsp;
             // Strings
@@ -970,7 +970,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Mar 16 2022 12:55:53 GMT-0700 (Pacific Daylight Time)
+                at Thu Mar 17 2022 20:42:44 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="prettify.js"></script>
         <script>
