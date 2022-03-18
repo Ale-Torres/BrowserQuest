@@ -137,16 +137,16 @@
         return enc;
     }
 
-    function _add_decoded_sec(frame, encoding, key=null) {
+    function _add_decoded_sec(frame, decoding, key=null) {
         if(frame instanceof Array) {
-            frame.push(encoding);
+            frame.push(decoding);
         }else{
-            frame[key] = encoding;
+            frame[key] = decoding;
         }
     }
 
     function _decode_string(data, pos, frame, key) {
-        e = 0;
+        let e = 0;
         while (data.charCodeAt(pos) === 65535) {
             e += 65535;
             pos++;
@@ -161,6 +161,7 @@
     }
 
     function _decode_floats(data, t, pos, f, key) {
+        let  r = 0;
         if (((t - 13) / 2 | 0) === 0) {
             r = data.charCodeAt(pos);
             if (r > 127) {
@@ -187,19 +188,20 @@
 
     function _decode_fixed(frame, type, key) {
         type = type - 17;
+        let decoding = 0;
         if (type > 115) {
-            encoding = 0 - type + 116;
+            decoding = 0 - type + 116;
         } else {
-            encoding = type + 1;
+            decoding = type + 1;
         }
-        _add_decoded_sec(frame, encoding, key);
+        _add_decoded_sec(frame, decoding, key);
     }
 
 
 
     function decode(data) {
         var pos = 0;
-        data_len = data.length;
+        let data_len = data.length;
         var stack = [];
         var dec = undefined;
         var frame = null;

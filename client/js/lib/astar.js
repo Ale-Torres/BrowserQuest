@@ -1,7 +1,7 @@
 
 define(function() {
 
-    var AStar = (function () {
+    return (function () {
 
         /**
          * A* (A-Star) algorithm for a path finder
@@ -169,6 +169,4 @@ define(function() {
         return AStar;
 
     }());
-    
-    return AStar;
 });

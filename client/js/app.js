@@ -1,7 +1,7 @@
 
 define(['jquery', 'storage'], function($, Storage) {
 
-    var App = Class.extend({
+    return Class.extend({
         init: function() {
             this.currentPage = 1;
             this.blinkInterval = null;
@@ -529,6 +529,4 @@ define(['jquery', 'storage'], function($, Storage) {
             } 
         }
     });
-
-    return App;
 });

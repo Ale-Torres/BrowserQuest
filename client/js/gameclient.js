@@ -120,7 +120,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         receiveMessage: function(message) {
-            var data, action;
+            var data;
         
             if(this.isListening) {
                 if(this.useBison) {

@@ -1,7 +1,7 @@
 
 define(['area'], function(Area) {
 
-    var AudioManager = Class.extend({
+    return Class.extend({
         init: function(game) {
             var self = this;
         
@@ -245,6 +245,4 @@ define(['area'], function(Area) {
             }
         }
     });
-    
-    return AudioManager;
 });
