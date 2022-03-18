@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1647581410107" clover="3.2.0">
-  <project timestamp="1647581410107" name="All files">
+<coverage generated="1647581935288" clover="3.2.0">
+  <project timestamp="1647581935288" name="All files">
     <metrics statements="121" coveredstatements="119" conditionals="76" coveredconditionals="70" methods="11" coveredmethods="11" elements="208" coveredelements="200" complexity="0" loc="121" ncloc="121" packages="1" files="2" classes="2"/>
     <file name="astar.js" path="/Users/samuelbarrett/Documents/seng371/BrowserQuest/client/js/lib/tests/astar.js">
       <metrics statements="107" coveredstatements="106" conditionals="63" coveredconditionals="61" methods="9" coveredmethods="9"/>
