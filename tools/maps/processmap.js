@@ -53,21 +53,17 @@ module.exports = function processMap(json, options) {
             collidingTiles[id] = true;
         }
         
-        if(mode === "client") {
-            if(property.name === "v") {
-                map.high.push(id);
+        if((mode === "client") && (property.name === "v")) {
+            map.high.push(id);
             }
             if(property.name === "length") {
-                if(!map.animated[id]) {
-                    map.animated[id] = {};
-                }
                 map.animated[id].l = property.value;
             }
             if(property.name === "delay") {
-                if(!map.animated[id]) {
-                    map.animated[id] = {};
-                }
                 map.animated[id].d = property.value;
+            }
+            if(!map.animated[id]) {
+                map.animated[id] = {};
             }
         }
     }
